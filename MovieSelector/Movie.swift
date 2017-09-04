@@ -102,7 +102,9 @@ public struct Movie {
                     tableViewCell.setNeedsLayout()
                     
                 } else {
-                    // add CollectionViewCell implementation
+                    let collectionViewCell = cell as! MovieCollectionViewCell
+                    collectionViewCell.movieImageView.image = UIImage(data: imageData)
+                    collectionViewCell.setNeedsLayout()
                 }
             }
         } else {
@@ -125,10 +127,15 @@ public struct Movie {
                     }
                     
                     DispatchQueue.main.async(execute: {
-                        let tableViewCell = cell as! UITableViewCell
-                        tableViewCell.imageView?.image = UIImage(data: data)
-                        tableViewCell.setNeedsLayout()
-
+                        if cell is UITableViewCell {
+                            let tableViewCell = cell as! UITableViewCell
+                            tableViewCell.imageView?.image = UIImage(data: data)
+                            tableViewCell.setNeedsLayout()
+                        } else {
+                            let collectionViewCell = cell as! MovieCollectionViewCell
+                            collectionViewCell.movieImageView.image = UIImage(data: data)
+                            collectionViewCell.setNeedsLayout()
+                        }
                     })
                     
                 } catch {
